@@ -21,7 +21,7 @@ void Poo::Update()
 	const int right = int(x) + width;
 	if( x < 0 )
 	{
-		x = 0;
+		x = 0.0f;
 		vx = -vx;
 	}
 	else if( right >= Graphics::ScreenWidth )
@@ -33,7 +33,7 @@ void Poo::Update()
 	const int bottom = int(y) + height;
 	if( y < 0 )
 	{
-		y = 0;
+		y = 0.0f;
 		vy = -vy;
 	}
 	else if( bottom >= Graphics::ScreenHeight )

@@ -58,6 +58,16 @@ public:
 			}
 		}
 	}
+
+	int GetX()
+	{
+		return x;
+	}
+
+	int GetY()
+	{
+		return y;
+	}
 private:
 	static constexpr int dimension = 20;
 	Color c = { 127,0,0 };
