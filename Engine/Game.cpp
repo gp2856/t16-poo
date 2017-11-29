@@ -32,7 +32,7 @@ Game::Game( MainWindow& wnd )
 	goal( int(xDist( rng )),int(yDist( rng )) ),
 	meter( 20,20 )
 {
-	std::uniform_real_distribution<float> vDist( -2.5f,6.7f );
+	std::uniform_real_distribution<float> vDist( -2.5f,3.7f );
 	for( int i = 0; i < nPoo; ++i )
 	{
 		poos[i].Init( xDist( rng ),yDist( rng ),vDist( rng ),vDist( rng ) );
@@ -28436,7 +28436,7 @@ void Game::ComposeFrame()
 	}
 	else
 	{
-		gfx.DrawCircle(goal.GetX() + 10, goal.GetY() + 10, 20, Colors::Red);
+		gfx.DrawCircleFilled(50, 50, 40, Colors::Green);
 		goal.Draw( gfx );
 		for( int i = 0; i < nPoo; ++i )
 		{

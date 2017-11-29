@@ -372,6 +372,28 @@ void Graphics::DrawCircle(int x0, int y0, int radius, Color c)
 
 }
 
+void Graphics::DrawCircleFilled(int x, int y, int radius, Color c)
+{
+	const int rad_squared = radius * radius;
+
+
+	for (int y_loop = y - radius; y_loop <= y + radius; y_loop++)
+	{
+		for (int x_loop = x - radius; x_loop <= x + radius; x_loop++)
+		{
+			// Get distance from center of each x,y
+			const int x_diff = x - x_loop;
+			const int y_diff = y - y_loop;
+
+			// if point is inside the circle
+			if (((x_diff * x_diff) + (y_diff * y_diff)) <= rad_squared)
+			{
+				PutPixel(x_loop, y_loop, c);
+			}
+		}
+	}
+}
+
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )

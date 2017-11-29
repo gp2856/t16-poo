@@ -14,6 +14,7 @@ public:
 	void Draw( Graphics& gfx ) const
 	{
 		gfx.DrawRectDim( x,y,dimension,dimension,c );
+		gfx.DrawCircle(x + 10, y + 10, 20, c);
 	}
 	bool TestCollision( const Dude& dude ) const
 	{
