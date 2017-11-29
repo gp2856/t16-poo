@@ -28,6 +28,7 @@
 #include "Goal.h"
 #include "Meter.h"
 #include "SoundEffect.h"
+#include "FrameTimer.h"
 #include <random>
 
 class Game

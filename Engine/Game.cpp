@@ -50,6 +50,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	
 	goal.UpdateColor();
 	if( isStarted && !isGameOver )
 	{
