@@ -45,8 +45,8 @@ bool Poo::TestCollision( const Dude& dude ) const
 {
 	assert( initialized == true );
 	const Vec2 dudePos = dude.GetPos();
-	const int duderight = dudePos.x + dude.GetWidth();
-	const int dudebottom = dudePos.y + dude.GetHeight();
+	const int duderight = (int)dudePos.x + dude.GetWidth();
+	const int dudebottom = (int)dudePos.y + dude.GetHeight();
 	const int pooright = (int)pos.x + width;
 	const int poobottom = (int)pos.y + height;
 

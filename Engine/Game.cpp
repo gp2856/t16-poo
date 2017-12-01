@@ -53,14 +53,19 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
+	
 	goal.UpdateColor();
 	if( isStarted && !isGameOver )
 	{
 		if (wnd.mouse.LeftIsPressed())
 		{
-			const Vect2 pointerPos = ((float)wnd.mouse.GetPosX, (float)wnd.mouse.GetPosY);
+			Vec2 pointerPos = Vec2((float)wnd.mouse.GetPosX(), (float)wnd.mouse.GetPosY());
+			Vec2 distance = pointerPos - dude.GetPos();
+			Vec2 direction = distance.Normalize();
+			dude.Update(wnd.kbd, dt, direction);
 		}
-		dude.Update( wnd.kbd, dt );
+		
+		
 		dude.ClampToScreen();
 
 		for( int i = 0; i < nPoo; ++i )

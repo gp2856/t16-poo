@@ -350,24 +350,9 @@ void Dude::Draw( Graphics& gfx ) const
 	gfx.PutPixel( 12 + (int)pos.x,19 + (int)pos.y,0,0,0 );
 }
 
-void Dude::Update( const Keyboard & kbd, float dt )
+void Dude::Update( const Keyboard & kbd, float dt, Vec2 direction )
 {
-	if( kbd.KeyIsPressed( VK_RIGHT ) )
-	{
-		pos.x += (float)(speed * dt);
-	}
-	if( kbd.KeyIsPressed( VK_LEFT ) )
-	{
-		pos.x -= (float)(speed * dt);
-	}
-	if( kbd.KeyIsPressed( VK_DOWN ) )
-	{
-		pos.y += (float)(speed * dt);
-	}
-	if( kbd.KeyIsPressed( VK_UP ) )
-	{
-		pos.y -= (float)(speed * dt);
-	}
+	pos += direction * speed * dt;
 }
 
 Vec2 Dude::GetPos() const
