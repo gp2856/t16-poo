@@ -43,4 +43,4 @@ Vec2 & Vec2::operator*=(float rhs)
 {
 	return *this = *this * rhs;
 }
-}
+

@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "Vec2.h"
 #include <random>
 
 Game::Game( MainWindow& wnd )
@@ -35,7 +36,7 @@ Game::Game( MainWindow& wnd )
 	std::uniform_real_distribution<float> vDist( -2.5f * 60,3.7f * 60 );
 	for( int i = 0; i < nPoo; ++i )
 	{
-		poos[i].Init( xDist( rng ),yDist( rng ),vDist( rng ),vDist( rng ) );
+		poos[i].Init( Vec2(xDist(rng), yDist(rng)),Vec2(vDist( rng ),vDist( rng )) );
 	}
 	title.Play();
 }
