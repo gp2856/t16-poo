@@ -56,6 +56,10 @@ void Game::UpdateModel()
 	goal.UpdateColor();
 	if( isStarted && !isGameOver )
 	{
+		if (wnd.mouse.LeftIsPressed())
+		{
+			const Vect2 pointerPos = ((float)wnd.mouse.GetPosX, (float)wnd.mouse.GetPosY);
+		}
 		dude.Update( wnd.kbd, dt );
 		dude.ClampToScreen();
 
