@@ -2,6 +2,7 @@
 
 #include "Graphics.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 #include "Vec2.h"
 
 class Dude
@@ -10,7 +11,7 @@ public:
 	Dude(float x, float y);
 	void ClampToScreen();
 	void Draw( Graphics& gfx ) const;
-	void Update( const Keyboard& kbd, float dt, Vec2 direction );
+	void Update( const Mouse& mouse, const float dt );
 	Vec2 GetPos() const;
 	int GetWidth() const;
 	int GetHeight() const;

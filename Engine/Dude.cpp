@@ -350,9 +350,18 @@ void Dude::Draw( Graphics& gfx ) const
 	gfx.PutPixel( 12 + (int)pos.x,19 + (int)pos.y,0,0,0 );
 }
 
-void Dude::Update( const Keyboard & kbd, float dt, Vec2 direction )
+void Dude::Update(const Mouse & mouse, const float dt)
 {
-	pos += direction * speed * dt;
+	if (mouse.LeftIsPressed())
+	{
+		const Vec2 center = pos + Vec2((float)(GetWidth() / 2), (float)(GetHeight() / 2));
+		const Vec2 toPointer = Vec2((float)(mouse.GetPosX()), (float)(mouse.GetPosY())) - center;
+
+		if (toPointer.GetLengthSq() > 2.0f)
+		{
+			pos += toPointer.GetNormalized() * speed * dt;
+		}
+	}
 }
 
 Vec2 Dude::GetPos() const
