@@ -2,6 +2,7 @@
 
 #include "Graphics.h"
 #include "Dude.h"
+#include "Vec2.h"
 
 class Goal
 {
@@ -18,16 +19,17 @@ public:
 	}
 	bool TestCollision( const Dude& dude ) const
 	{
-		const int duderight = dude.GetX() + dude.GetWidth();
-		const int dudebottom = dude.GetY() + dude.GetHeight();
+		Vec2 dudePos = dude.GetPos();
+		const int duderight = (int)dudePos.x + dude.GetWidth();
+		const int dudebottom = (int)dudePos.y + dude.GetHeight();
 		const int pooright = x + dimension;
 		const int poobottom = y + dimension;
 
 		return
 			duderight >= x &&
-			dude.GetX() <= pooright &&
+			dudePos.x <= pooright &&
 			dudebottom >= y &&
-			dude.GetY() <= poobottom;
+			dudePos.y <= poobottom;
 	}
 	void Respawn( int in_x,int in_y )
 	{

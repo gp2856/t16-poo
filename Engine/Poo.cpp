@@ -44,16 +44,17 @@ void Poo::Update(float dt)
 bool Poo::TestCollision( const Dude& dude ) const
 {
 	assert( initialized == true );
-	const int duderight = dude.GetX() + dude.GetWidth();
-	const int dudebottom = dude.GetY() + dude.GetHeight();
+	const Vec2 dudePos = dude.GetPos();
+	const int duderight = dudePos.x + dude.GetWidth();
+	const int dudebottom = dudePos.y + dude.GetHeight();
 	const int pooright = (int)pos.x + width;
 	const int poobottom = (int)pos.y + height;
 
 	return
 		duderight >= (int)pos.x &&
-		dude.GetX() <= pooright &&
+		dudePos.x <= pooright &&
 		dudebottom >= (int)pos.y &&
-		dude.GetY() <= poobottom;
+		dudePos.y <= poobottom;
 }
 
 void Poo::Draw( Graphics& gfx ) const

@@ -2,20 +2,20 @@
 
 #include "Graphics.h"
 #include "Keyboard.h"
+#include "Vec2.h"
 
 class Dude
 {
 public:
+	Dude(float x, float y);
 	void ClampToScreen();
 	void Draw( Graphics& gfx ) const;
 	void Update( const Keyboard& kbd, float dt );
-	int GetX() const;
-	int GetY() const;
+	Vec2 GetPos() const;
 	int GetWidth() const;
 	int GetHeight() const;
 private:
-	int x = 400;
-	int y = 300;
+	Vec2 pos;
 	static constexpr int speed = 120;
 	static constexpr int width = 20;
 	static constexpr int height = 20;

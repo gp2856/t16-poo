@@ -23,15 +23,16 @@
 #include "Vec2.h"
 #include <random>
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
-	rng( rd() ),
-	xDist( 0.0f,770.0f ),
-	yDist( 0.0f,570.0f ),
-	goal( int(xDist( rng )),int(yDist( rng )) ),
-	meter( 20,20 )
+	wnd(wnd),
+	gfx(wnd),
+	rng(rd()),
+	xDist(0.0f, 770.0f),
+	yDist(0.0f, 570.0f),
+	goal(int(xDist(rng)), int(yDist(rng))),
+	meter(20, 20),
+	dude(200.0f, 400.0f)
 {
 	std::uniform_real_distribution<float> vDist( -2.5f * 60,3.7f * 60 );
 	for( int i = 0; i < nPoo; ++i )
