@@ -30,7 +30,7 @@ Game::Game(MainWindow& wnd)
 	rng(rd()),
 	xDist(0.0f, 770.0f),
 	yDist(0.0f, 570.0f),
-	goal(int(xDist(rng)), int(yDist(rng))),
+	goal(Vec2(xDist(rng), yDist(rng))),
 	meter(20, 20),
 	dude(200.0f, 400.0f)
 {
@@ -71,7 +71,7 @@ void Game::UpdateModel()
 
 		if( goal.TestCollision( dude ) )
 		{
-			goal.Respawn( int(xDist( rng )),int(yDist( rng )) );
+			goal.Respawn( Vec2(xDist(rng), yDist(rng)) );
 			meter.IncreaseLevel();
 			pickup.Play( rng );
 		}
