@@ -19,10 +19,13 @@
 *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
 ******************************************************************************************/
 #pragma once
+#include "ChiliWin.h"
 #include <d3d11.h>
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Surface.h"
+#include "RectI.h"
 
 class Graphics
 {
@@ -56,13 +59,18 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
-	void DrawRect( int x0,int y0,int x1,int y1,Color c );
-	void DrawRectDim( int x0,int y0,int width,int height,Color c )
+	void draw_sprite_no_chroma(int x, int y, const surface& s);
+	void draw_sprite_no_chroma(int x, int y, const RectI & source, const surface & s);
+	void draw_sprite_no_chroma(int x, int y, RectI source, const RectI& clip, const surface& s);
+	void draw_sprite(int x, int y, const surface & s, const Color & chroma);
+	void draw_sprite(int x, int y, const RectI & source, const surface & s, const Color & chroma);
+	void draw_sprite(int x, int y, RectI source, const RectI& clip, const surface& s, const Color& chroma);
+	void DrawRect(int x0, int y0, int x1, int y1, Color c);
+	void DrawRectDim(int x0, int y0, int width, int height, Color c)
 	{
-		DrawRect( x0,y0,x0 + width,y0 + height,c );
+		DrawRect(x0, y0, x0 + width, y0 + height, c);
 	}
-	void DrawCircle(int x0, int y0, int radius, Color c);
-	void DrawCircleFilled(int x, int y, int radius, Color c);
+	RectI get_screen_rect() const;
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

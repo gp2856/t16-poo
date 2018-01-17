@@ -240,7 +240,6 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
-
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
@@ -317,82 +316,122 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
-void Graphics::DrawRect( int x0,int y0,int x1,int y1,Color c )
+void Graphics::draw_sprite_no_chroma(int x, int y, const surface& s)
 {
-	if( x0 > x1 )
-	{
-		std::swap( x0,x1 );
-	}
-	if( y0 > y1 )
-	{
-		std::swap( y0,y1 );
-	}
+	draw_sprite_no_chroma(x, y, s.get_rect(), s);
+}
 
-	for( int y = y0; y < y1; ++y )
+void Graphics::draw_sprite_no_chroma(int x, int y, const RectI& source, const surface& s)
+{
+	draw_sprite_no_chroma(x, y, source, get_screen_rect(), s);
+}
+void Graphics::draw_sprite_no_chroma(int x, int y, RectI source, const RectI& clip, const surface & s)
+{
+	assert(source.left >= 0);
+	assert(source.right <= s.get_width());
+	assert(source.top >= 0);
+	assert(source.bottom <= s.get_height());
+
+	if (x < clip.left)
 	{
-		for( int x = x0; x < x1; ++x )
+		source.left += clip.left - x;
+		x = clip.left;
+	}
+	if (y < clip.top)
+	{
+		source.top += clip.top - y;
+		y = clip.top;
+	}
+	if (x + source.GetWidth() > clip.right)
+	{
+		source.right -= x + source.GetWidth() - clip.right;
+	}
+	if (y + source.GetHeight() > clip.bottom)
+	{
+		source.bottom -= y + source.GetHeight() - clip.bottom;
+	}
+	for (int sy = source.top; sy < source.bottom; sy++)
+	{
+		for (int sx = source.left; sx < source.right; sx++)
 		{
-			PutPixel( x,y,c );
+			PutPixel(x + sx - source.left, y + sy - source.top, s.get_pixel(sx, sy));
 		}
 	}
 }
 
-void Graphics::DrawCircle(int x0, int y0, int radius, Color c)
+void Graphics::draw_sprite(int x, int y, const surface& s, const Color& chroma)
 {
-	int x = radius - 1;
-	int y = 0;
-	int dx = 1;
-	int dy = 1;
-	int err = dx - (radius << 1);
-
-	while (x >= y)
-	{
-		PutPixel(x0 + x, y0 + y, c);
-		PutPixel(x0 + y, y0 + x, c);
-		PutPixel(x0 - y, y0 + x, c);
-		PutPixel(x0 - x, y0 + y, c);
-		PutPixel(x0 - x, y0 - y, c);
-		PutPixel(x0 - y, y0 - x, c);
-		PutPixel(x0 + y, y0 - x, c);
-		PutPixel(x0 + x, y0 - y, c);
-
-		if (err <= 0)
-		{
-			y++;
-			err += dy;
-			dy += 2;
-		}
-		if(err > 0)
-		{
-			x--;
-			dx += 2;
-			err += dx - (radius << 1);
-		}
-	}
-
+	draw_sprite(x, y, s.get_rect(), s, chroma);
 }
 
-void Graphics::DrawCircleFilled(int x, int y, int radius, Color c)
+void Graphics::draw_sprite(int x, int y, const RectI& source, const surface& s, const Color& chroma)
 {
-	const int rad_squared = radius * radius;
+	draw_sprite(x, y, source, get_screen_rect(), s, chroma);
+}
 
+void Graphics::draw_sprite(int x, int y, RectI source, const RectI & clip, const surface & s, const Color & chroma)
+{
+	assert(source.left >= 0);
+	assert(source.right <= s.get_width());
+	assert(source.top >= 0);
+	assert(source.bottom <= s.get_height());
 
-	for (int y_loop = y - radius; y_loop <= y + radius; y_loop++)
+	if (x < clip.left)
 	{
-		for (int x_loop = x - radius; x_loop <= x + radius; x_loop++)
+		source.left += clip.left - x;
+		x = clip.left;
+	}
+	if (y < clip.top)
+	{
+		source.top += clip.top - y;
+		y = clip.top;
+	}
+	if (x + source.GetWidth() > clip.right)
+	{
+		source.right -= x + source.GetWidth() - clip.right;
+	}
+	if (y + source.GetHeight() > clip.bottom)
+	{
+		source.bottom -= y + source.GetHeight() - clip.bottom;
+	}
+	for (int sy = source.top; sy < source.bottom; sy++)
+	{
+		for (int sx = source.left; sx < source.right; sx++)
 		{
-			// Get distance from center of each x,y
-			const int x_diff = x - x_loop;
-			const int y_diff = y - y_loop;
-
-			// if point is inside the circle
-			if (((x_diff * x_diff) + (y_diff * y_diff)) <= rad_squared)
+			const Color& src_pixel = s.get_pixel(sx, sy);
+			if (src_pixel != chroma)
 			{
-				PutPixel(x_loop, y_loop, c);
+				PutPixel(x + sx - source.left, y + sy - source.top, src_pixel);
 			}
 		}
 	}
 }
+
+void Graphics::DrawRect(int x0, int y0, int x1, int y1, Color c)
+{
+	if (x0 > x1)
+	{
+		std::swap(x0, x1);
+	}
+	if (y0 > y1)
+	{
+		std::swap(y0, y1);
+	}
+
+	for (int y = y0; y < y1; ++y)
+	{
+		for (int x = x0; x < x1; ++x)
+		{
+			PutPixel(x, y, c);
+		}
+	}
+}
+
+RectI Graphics::get_screen_rect() const
+{
+	return RectI(0,ScreenWidth,0,ScreenHeight);
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception

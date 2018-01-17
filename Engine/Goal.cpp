@@ -6,7 +6,6 @@ Goal::Goal(Vec2 in_pos)
 void Goal::Draw(Graphics& gfx) const
 {
 	gfx.DrawRectDim((int)pos.x, (int)pos.y, dimension, dimension, c);
-	gfx.DrawCircle((int)pos.x + 10, (int)pos.y + 10, 20, c);
 }
 bool Goal::TestCollision(const Dude& dude) const
 {

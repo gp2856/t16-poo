@@ -3,6 +3,7 @@
 #include "Graphics.h"
 #include "Dude.h"
 #include "Vec2.h"
+#include "Surface.h"
 
 class Poo
 {
@@ -11,10 +12,11 @@ public:
 	void Update(float dt);
 	bool TestCollision( const Dude& dude ) const;
 	void Draw( Graphics& gfx ) const;
+	int GetWidth() const;
+	int GetHeight() const;
 private:
 	Vec2 pos;
 	Vec2 vel;
-	static constexpr int width = 24;
-	static constexpr int height = 24;
+	surface sprite_ = surface("Graphics\\poo.bmp");
 	bool initialized = false;
 };

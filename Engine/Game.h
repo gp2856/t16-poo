@@ -29,6 +29,7 @@
 #include "Meter.h"
 #include "SoundEffect.h"
 #include "FrameTimer.h"
+#include "Surface.h"
 #include <random>
 
 class Game
@@ -56,6 +57,8 @@ private:
 	std::mt19937 rng;
 	std::uniform_real_distribution<float> xDist;
 	std::uniform_real_distribution<float> yDist;
+	surface title_surf_ = surface("Graphics\\dapoopoo.bmp");
+	surface game_over_surf_ = surface("Graphics\\game_over.bmp");
 	Dude dude;
 	Goal goal;
 	Meter meter;

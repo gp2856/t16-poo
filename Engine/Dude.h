@@ -4,6 +4,7 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Vec2.h"
+#include "Surface.h"
 
 class Dude
 {
@@ -17,7 +18,7 @@ public:
 	int GetHeight() const;
 private:
 	Vec2 pos;
+	surface sprite_ = surface("Graphics\\awsom.bmp");
 	static constexpr float speed = 120.0f;
-	static constexpr int width = 20;
-	static constexpr int height = 20;
+	
 };
